@@ -2,9 +2,12 @@ package db
 
 import (
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/cris93g/back/pkg/models"
 	"github.com/jinzhu/gorm"
+	"github.com/joho/godotenv"
 )
 
 //DBConn pulls function from gorm
@@ -12,9 +15,13 @@ var DBConn *gorm.DB
 
 //InitDb creates a connection to db
 func InitDb(){
-
+	e:=godotenv.Load()
+	if e !=nil{
+		log.Fatal("Cannot get connection string to DB")
+	}
+	connectionURL := os.Getenv("CONNECTION_URL")
 	var err error
-	DBConn, err = gorm.Open("postgres","host=ec2-54-235-252-23.compute-1.amazonaws.com port=5432  user=zxfwdderycxcqn dbname=d5f9fcljfn7v2i password=4f697ab683da4c3eb158c85db737abeffe4acbec775cbd05dca56aae6756081bCONNECTION_URL=host=ec2-54-235-252-23.compute-1.amazonaws.com port=5432  user=zxfwdderycxcqn dbname=d5f9fcljfn7v2i password=4f697ab683da4c3eb158c85db737abeffe4acbec775cbd05dca56aae6756081b")
+	DBConn, err = gorm.Open("postgres",connectionURL)
 	if err!= nil{
 		panic("failed to connect to db")
 	}

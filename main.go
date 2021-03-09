@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/cris93g/back/pkg/db"
 	"github.com/cris93g/back/pkg/routes"
 	"github.com/gofiber/fiber/v2"
@@ -10,8 +12,9 @@ import (
 
 func main() {
 	app:= fiber.New()
+	port:=os.Getenv("PORT")
 	db.InitDb()
 	defer db.DBConn.Close()
 	routes.Routes(app)
-	app.Listen(":3001")
+	app.Listen(":"+port)
 }

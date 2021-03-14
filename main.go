@@ -15,6 +15,7 @@ func main() {
 	port:=os.Getenv("PORT")
 	db.InitDb()
 	defer db.DBConn.Close()
+	app.Listen("db closed")
 	routes.Routes(app)
 	app.Listen(":"+port)
 }
